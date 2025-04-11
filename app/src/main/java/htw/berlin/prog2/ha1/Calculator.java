@@ -130,6 +130,7 @@ public class Calculator {
         if(screen.endsWith(".0")) screen = screen.substring(0,screen.length()-2);
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
     }
+//Grüner Test 1. Teilaufgabe
 
     public void NegativesZeichen() {
 
@@ -147,8 +148,27 @@ public class Calculator {
         }
     }
 
+//Roter Test 2. Teilaufgabe
+
+    public void DivisionMitNull(){
+
+        pressDigitKey(0);
+        pressUnaryOperationKey("1/x");
+
+        String erwartet= "Error";  //Zahl, die Erwartet wird
+        String Zahl = readScreen();
+
+        if (erwartet.equals(Zahl)) {
+            System.out.println("NegativesZeichen : Ergebnis = " + Zahl);
+        } else {
+            System.out.println("NegativesZeichen : Erwartet = " + erwartet + ", aber war = " + Zahl);
+        }
+
+    }
+
     public static void main(String[] args){
         Calculator c = new Calculator();
         c.NegativesZeichen();
+        c.DivisionMitNull();
     }
 }
