@@ -159,16 +159,36 @@ public class Calculator {
         String Zahl = readScreen();
 
         if (erwartet.equals(Zahl)) {
-            System.out.println("NegativesZeichen : Ergebnis = " + Zahl);
+            System.out.println("DivisionMitNull : Ergebnis = " + Zahl);
         } else {
-            System.out.println("NegativesZeichen : Erwartet = " + erwartet + ", aber war = " + Zahl);
+            System.out.println("DivisionMitNull : Erwartet = " + erwartet + ", aber war = " + Zahl);
         }
 
+    }
+
+    public void DoppelteRechnung(){
+
+        pressDigitKey(8);
+        pressBinaryOperationKey("-");
+        pressDigitKey(2);
+        pressEqualsKey();
+        pressEqualsKey();
+
+        String erwartet = "4";
+        String Zahl = readScreen();
+
+        if(erwartet.equals(Zahl)) {
+            System.out.println("DoppelteRechnung : Ergebnis = " + Zahl);
+        }
+        else{
+            System.out.println("DoppelteRechnung : Erwartet = " + erwartet + ", aber war = " + Zahl);
+        }
     }
 
     public static void main(String[] args){
         Calculator c = new Calculator();
         c.NegativesZeichen();
         c.DivisionMitNull();
+        c.DoppelteRechnung();
     }
 }
