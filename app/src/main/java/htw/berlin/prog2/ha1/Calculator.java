@@ -14,6 +14,8 @@ public class Calculator {
 
     private String latestOperation = "";
 
+
+
     /**
      * @return den aktuellen Bildschirminhalt als String
      */
@@ -83,6 +85,7 @@ public class Calculator {
         screen = Double.toString(result);
         if(screen.equals("NaN")) screen = "Error";
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
+
 
     }
 
@@ -202,8 +205,7 @@ public class Calculator {
 
     public static void main(String[] args){
         Calculator c = new Calculator();
-        c.NegativesZeichen();
+
         c.DivisionMitNull();
-        c.DoppelteRechnung();
     }
 }
