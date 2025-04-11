@@ -130,4 +130,25 @@ public class Calculator {
         if(screen.endsWith(".0")) screen = screen.substring(0,screen.length()-2);
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
     }
+
+    public void NegativesZeichen() {
+
+        pressDigitKey(3);
+        pressDigitKey(7);   // Bildschirm zeigt "37"
+      pressNegativeKey(); // Es sollte "-37" ergeben
+
+        String erwartet= "-37";  //Zahl, die Erwartet wird
+        String Zahl = readScreen();
+
+        if (erwartet.equals(Zahl)) {
+            System.out.println("NegativesZeichen : Ergebnis = " + Zahl);
+        } else {
+            System.out.println("NegativesZeichen : Erwartet = " + erwartet + ", aber war = " + Zahl);
+        }
+    }
+
+    public static void main(String[] args){
+        Calculator c = new Calculator();
+        c.NegativesZeichen();
+    }
 }
