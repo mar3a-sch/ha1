@@ -14,6 +14,11 @@ public class Calculator {
 
     private String latestOperation = "";
 
+    private double lastOperand;
+
+    private boolean repeatEqualsPressed = false;
+
+
 
 
     /**
@@ -31,6 +36,7 @@ public class Calculator {
      * @param digit Die Ziffer, deren Taste gedrückt wurde
      */
     public void pressDigitKey(int digit) {
+        repeatEqualsPressed = false;
         if(digit > 9 || digit < 0) throw new IllegalArgumentException();
 
         if(screen.equals("0") || latestValue == Double.parseDouble(screen)) screen = "";
@@ -62,6 +68,7 @@ public class Calculator {
      * @param operation "+" für Addition, "-" für Substraktion, "x" für Multiplikation, "/" für Division
      */
     public void pressBinaryOperationKey(String operation)  {
+        repeatEqualsPressed = false;
         latestValue = Double.parseDouble(screen);
         latestOperation = operation;
     }
@@ -122,13 +129,27 @@ public class Calculator {
      * und das Ergebnis direkt angezeigt.
      */
     public void pressEqualsKey() {
+
+        double current = Double.parseDouble(screen);
+
+        if (latestOperation.equals("")) return;
+
+        if (repeatEqualsPressed) {
+            current = lastOperand;
+        } else {
+            lastOperand = current;
+            repeatEqualsPressed = true;
+        }
+
         var result = switch(latestOperation) {
-            case "+" -> latestValue + Double.parseDouble(screen);
-            case "-" -> latestValue - Double.parseDouble(screen);
-            case "x" -> latestValue * Double.parseDouble(screen);
-            case "/" -> latestValue / Double.parseDouble(screen);
+            case "+" -> latestValue + current;
+            case "-" -> latestValue - current;
+            case "x" -> latestValue * current;
+            case "/" -> current == 0 ? Double.POSITIVE_INFINITY : latestValue / current;
             default -> throw new IllegalArgumentException();
         };
+
+        latestValue = result;
         screen = Double.toString(result);
         if(screen.equals("Infinity")) screen = "Error";
         if(screen.endsWith(".0")) screen = screen.substring(0,screen.length()-2);
@@ -207,7 +228,7 @@ public class Calculator {
     public static void main(String[] args){
         Calculator c = new Calculator();
 
-        c.DivisionMitNull();
+        c.DoppelteRechnung();
 
     }
 }
