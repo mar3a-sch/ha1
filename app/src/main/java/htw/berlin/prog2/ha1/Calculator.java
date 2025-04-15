@@ -68,7 +68,7 @@ public class Calculator {
      * @param operation "+" für Addition, "-" für Substraktion, "x" für Multiplikation, "/" für Division
      */
     public void pressBinaryOperationKey(String operation)  {
-        repeatEqualsPressed = false;
+        repeatEqualsPressed = false; //Tipp von Chat GPT; Hatte den Fehler meines Codes nicht gefunden, warum es nicht funktioniert
         latestValue = Double.parseDouble(screen);
         latestOperation = operation;
     }
