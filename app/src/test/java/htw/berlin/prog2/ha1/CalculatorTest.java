@@ -129,7 +129,7 @@ class CalculatorTest {
 
     }
 
-    /*@Test
+    @Test
     @DisplayName("Erwartet, dass die letzte Operation korrekt wiederholt wird.")
     void DoppelteRechnung() {
 
@@ -147,6 +147,6 @@ class CalculatorTest {
         assertEquals(erwartet, Zahl);
     }
 
-     */
+
 }
 
