@@ -82,12 +82,12 @@ public class Calculator {
      * @param operation "√" für Quadratwurzel, "%" für Prozent, "1/x" für Inversion
      */
     public void pressUnaryOperationKey(String operation) {
-        double value = Double.parseDouble(screen);
+        latestValue = Double.parseDouble(screen);
         latestOperation = operation;
         var result = switch (operation) {
             case "√" -> Math.sqrt(Double.parseDouble(screen));
-            case "%" -> value / 100;
-            case "1/x" -> value == 0 ? Double.POSITIVE_INFINITY : 1;
+            case "%" -> Double.parseDouble(screen) / 100;
+            case "1/x" ->  1 / Double.parseDouble(screen);
             default -> throw new IllegalArgumentException();
         };
         screen = Double.toString(result);
