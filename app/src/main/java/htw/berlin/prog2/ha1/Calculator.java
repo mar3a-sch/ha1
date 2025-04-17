@@ -14,9 +14,9 @@ public class Calculator {
 
     private String latestOperation = "";
 
-    private double lastOperand;
+   // private double lastOperand;
 
-    private boolean repeatEqualsPressed = false;
+   // private boolean repeatEqualsPressed = false;
 
 
 
@@ -36,7 +36,7 @@ public class Calculator {
      * @param digit Die Ziffer, deren Taste gedrückt wurde
      */
     public void pressDigitKey(int digit) {
-        repeatEqualsPressed = false;
+        //repeatEqualsPressed = false;
         if(digit > 9 || digit < 0) throw new IllegalArgumentException();
 
         if(screen.equals("0") || latestValue == Double.parseDouble(screen)) screen = "";
@@ -68,7 +68,7 @@ public class Calculator {
      * @param operation "+" für Addition, "-" für Substraktion, "x" für Multiplikation, "/" für Division
      */
     public void pressBinaryOperationKey(String operation)  {
-        repeatEqualsPressed = false; //Tipp von Chat GPT; Hatte den Fehler meines Codes nicht gefunden, warum es nicht funktioniert
+        //repeatEqualsPressed = false; //Tipp von Chat GPT; Hatte den Fehler meines Codes nicht gefunden, warum es nicht funktioniert
         latestValue = Double.parseDouble(screen);
         latestOperation = operation;
     }
@@ -81,17 +81,18 @@ public class Calculator {
      * @param operation "√" für Quadratwurzel, "%" für Prozent, "1/x" für Inversion
      */
     public void pressUnaryOperationKey(String operation) {
-        double value = Double.parseDouble(screen);
+        //double value = Double.parseDouble(screen);
+        latestValue = Double.parseDouble(screen);
         latestOperation = operation;
         var result = switch(operation) {
             case "√" -> Math.sqrt(Double.parseDouble(screen));
-            case "%" -> value / 100;
-            case "1/x" -> value == 0 ? Double.POSITIVE_INFINITY : 1;
+            case "%" ->  Double.parseDouble(screen) / 100; //value / 100;
+            case "1/x" ->  1 / Double.parseDouble(screen); //value == 0 ? Double.POSITIVE_INFINITY : 1;
             default -> throw new IllegalArgumentException();
         };
         screen = Double.toString(result);
         if(screen.equals("NaN") || screen.equals("Infinity")) screen = "Error";
-        if(screen.endsWith(".0")) screen = screen.substring(0, screen.length() - 2);
+        //if(screen.endsWith(".0")) screen = screen.substring(0, screen.length() - 2);
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
 
 
@@ -130,7 +131,7 @@ public class Calculator {
      */
     public void pressEqualsKey() {
 
-        double current = Double.parseDouble(screen);
+       /* double current = Double.parseDouble(screen);
 
         if (latestOperation.equals("")) return;
 
@@ -140,95 +141,19 @@ public class Calculator {
             lastOperand = current;
             repeatEqualsPressed = true;
         }
-
+        */
         var result = switch(latestOperation) {
-            case "+" -> latestValue + current;
-            case "-" -> latestValue - current;
-            case "x" -> latestValue * current;
-            case "/" -> current == 0 ? Double.POSITIVE_INFINITY : latestValue / current;
+            case "+" -> latestValue + Double.parseDouble(screen); //current;
+            case "-" -> latestValue - Double.parseDouble(screen); //current;
+            case "x" -> latestValue * Double.parseDouble(screen); //current;
+            case "/" -> latestValue / Double.parseDouble(screen); //current == 0 ? Double.POSITIVE_INFINITY : latestValue / current;
             default -> throw new IllegalArgumentException();
         };
 
-        latestValue = result;
+        //latestValue = result;
         screen = Double.toString(result);
         if(screen.equals("Infinity")) screen = "Error";
         if(screen.endsWith(".0")) screen = screen.substring(0,screen.length()-2);
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
-    }
-
-    /**
-     * Grüner Test 1. Teilaufgabe
-     * Testet Funktionalität der Vorzeichenumkehr
-     *
-     */
-
-    public void NegativesZeichen() {
-
-        pressDigitKey(3);
-        pressDigitKey(7);   // Bildschirm zeigt "37"
-      pressNegativeKey(); // Es sollte "-37" ergeben
-
-        String erwartet= "-37";  //Zahl, die Erwartet wird
-        String Zahl = readScreen();
-
-        //Vergleich von Erwartungswert mit ergebenden Zahl
-        if (erwartet.equals(Zahl)) {
-            System.out.println("NegativesZeichen : Ergebnis = " + Zahl);
-        } else {
-            System.out.println("NegativesZeichen : Erwartet = " + erwartet + ", aber war = " + Zahl);
-        }
-    }
-
-/**
- * Roter Test 2. Teilaufgabe
- * Testet die unäre Operation "1/x" mit 0
- *
- **/
-
-    public void DivisionMitNull(){
-
-        pressDigitKey(0);
-        pressUnaryOperationKey("1/x");
-
-        String erwartet= "Error";  //String, das Erwartet wird
-        String Zahl = readScreen();
-
-        if (erwartet.equals(Zahl)) {
-            System.out.println("DivisionMitNull : Ergebnis = " + Zahl);
-        } else {
-            System.out.println("DivisionMitNull : Erwartet = " + erwartet + ", aber war = " + Zahl);
-        }
-
-    }
-    /**
-     * Testet die Wiederholung einer binären Operation mit der "="-Taste.
-     * Erwartet, dass die letzte Operation korrekt wiederholt wird.
-     * Beispiel: 8 - 2 = = → ergibt 4
-     */
-
-    public void DoppelteRechnung(){
-
-        pressDigitKey(8);
-        pressBinaryOperationKey("-");
-        pressDigitKey(2);
-        pressEqualsKey();
-        pressEqualsKey();
-
-        String erwartet = "4";
-        String Zahl = readScreen();
-
-        if(erwartet.equals(Zahl)) {
-            System.out.println("DoppelteRechnung : Ergebnis = " + Zahl);
-        }
-        else{
-            System.out.println("DoppelteRechnung : Erwartet = " + erwartet + ", aber war = " + Zahl);
-        }
-    }
-
-    public static void main(String[] args){
-        Calculator c = new Calculator();
-
-        c.DoppelteRechnung();
-
     }
 }

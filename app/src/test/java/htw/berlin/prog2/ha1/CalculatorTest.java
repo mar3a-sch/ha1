@@ -90,5 +90,63 @@ class CalculatorTest {
 
 
     //TODO hier weitere Tests erstellen
+
+    @Test
+    @DisplayName("Testet Funktionalität der Vorzeichenumkehr")
+    void NegativesZeichen() {
+    Calculator c = new Calculator();
+        c.pressDigitKey(3);
+        c.pressDigitKey(7);   // Bildschirm zeigt "37"
+        c.pressNegativeKey(); // Es sollte "-37" ergeben
+
+        String erwartet= "-37";  //Zahl, die Erwartet wird
+        String Zahl = c.readScreen();
+
+        //Vergleich von Erwartungswert mit ergebenden Zahl
+        /**
+         * if (erwartet.equals(Zahl)) {
+         *             System.out.println("DivisionMitNull : Ergebnis = " + Zahl);
+         *         } else {
+         *             System.out.println("DivisionMitNull : Erwartet = " + erwartet + ", aber war = " + Zahl);
+         *         }
+         */
+
+        assertEquals(erwartet, Zahl);
+    }
+
+   /* @Test
+    @DisplayName("Testet die unäre Operation \"1/x\" mit 0")
+    void DivisionMitNull(){
+        Calculator c = new Calculator();
+
+        c.pressDigitKey(0);
+        c.pressUnaryOperationKey("1/x");
+
+        String erwartet= "Error";  //String, das Erwartet wird
+        String Zahl = c.readScreen();
+
+        assertEquals(erwartet, Zahl);
+
+    }
+
+    @Test
+    @DisplayName("Erwartet, dass die letzte Operation korrekt wiederholt wird.")
+    void DoppelteRechnung() {
+
+        Calculator c = new Calculator();
+
+        c.pressDigitKey(8);
+        c.pressBinaryOperationKey("-");
+        c.pressDigitKey(2);
+        c.pressEqualsKey();
+        c.pressEqualsKey();
+
+        String erwartet = "4";
+        String Zahl = c.readScreen();
+
+        assertEquals(erwartet, Zahl);
+    }
+
+    */
 }
 
