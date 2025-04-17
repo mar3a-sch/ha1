@@ -146,7 +146,7 @@ public class Calculator {
             case "+" -> latestValue + current;
             case "-" -> latestValue - current;
             case "x" -> latestValue * current;
-            case "/" -> current == 0 ? Double.POSITIVE_INFINITY : latestValue / current;
+            case "/" -> latestValue / Double.parseDouble(screen);
             default -> throw new IllegalArgumentException();
         };
 
